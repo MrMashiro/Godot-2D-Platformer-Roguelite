@@ -16,6 +16,9 @@ func _ready() -> void:
 	rand_idle_sprites = animated_sprites[randi() % 2]
 
 func _physics_process(_delta: float) -> void:
+	player_movement()
+
+func player_movement()-> void:
 	if Input.is_action_pressed("right"):
 		velocity.x = player_speed * 100.0
 		player_sprite.play("walk")
