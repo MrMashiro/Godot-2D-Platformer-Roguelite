@@ -92,5 +92,5 @@ texture = ExtResource( 1 )
 shape = SubResource( 1 )
 
 [node name="Player" parent="." instance=ExtResource( 2 )]
-position = Vector2( 533.158, 25.456 )
+position = Vector2( 728.319, 459.619 )
 player_speed = 3.8
