@@ -1,4 +1,4 @@
-[gd_scene load_steps=18 format=2]
+[gd_scene load_steps=20 format=2]
 
 [ext_resource path="res://ASSETS/WorldTiles/tileYellow_04.png" type="Texture" id=1]
 [ext_resource path="res://Player.tscn" type="PackedScene" id=2]
@@ -8,6 +8,8 @@
 [ext_resource path="res://ASSETS/WorldTiles/tileYellow_06.png" type="Texture" id=6]
 [ext_resource path="res://ASSETS/WorldTiles/tileYellow_17.png" type="Texture" id=7]
 [ext_resource path="res://pass_through_tileset.tres" type="TileSet" id=8]
+[ext_resource path="res://ASSETS/background/set2_background.png" type="Texture" id=9]
+[ext_resource path="res://ASSETS/background/set2_tiles.png" type="Texture" id=10]
 
 [sub_resource type="RectangleShape2D" id=8]
 extents = Vector2( 128, 32 )
@@ -189,7 +191,7 @@ tile_data = PoolIntArray( -196608, -1610612734, 0, -196558, -1073741822, 0, -131
 position = Vector2( 192.141, 360.877 )
 
 [node name="Camera2D" type="Camera2D" parent="Player"]
-position = Vector2( 0, -100 )
+position = Vector2( 1.18921, -27.4584 )
 current = true
 limit_left = 52
 limit_top = -300
@@ -202,3 +204,46 @@ smoothing_enabled = true
 drag_margin_left = 0.3
 drag_margin_right = 0.3
 editor_draw_limits = true
+
+[node name="ParallaxBackground" type="ParallaxBackground" parent="."]
+
+[node name="Purple Sky" type="ParallaxLayer" parent="ParallaxBackground"]
+motion_mirroring = Vector2( 1280, 960 )
+
+[node name="Sprite" type="Sprite" parent="ParallaxBackground/Purple Sky"]
+position = Vector2( 62.7577, -185.251 )
+scale = Vector2( 2, 2 )
+texture = ExtResource( 9 )
+centered = false
+
+[node name="Back Blocks" type="ParallaxLayer" parent="ParallaxBackground"]
+modulate = Color( 0, 0, 0, 0.145098 )
+motion_scale = Vector2( 0.25, 0.25 )
+motion_offset = Vector2( 0, -1000 )
+motion_mirroring = Vector2( 2560, 1920 )
+
+[node name="Sprite" type="Sprite" parent="ParallaxBackground/Back Blocks"]
+scale = Vector2( 4, 4 )
+texture = ExtResource( 10 )
+centered = false
+
+[node name="Middle Blocks" type="ParallaxLayer" parent="ParallaxBackground"]
+modulate = Color( 0.490196, 0.603922, 0.611765, 0.156863 )
+motion_scale = Vector2( 0.4, 0.4 )
+motion_offset = Vector2( 0, -500 )
+motion_mirroring = Vector2( 1600, 1200 )
+
+[node name="Sprite" type="Sprite" parent="ParallaxBackground/Middle Blocks"]
+scale = Vector2( 2.5, 2.5 )
+texture = ExtResource( 10 )
+centered = false
+
+[node name="Nearby Blocks" type="ParallaxLayer" parent="ParallaxBackground"]
+modulate = Color( 0.709804, 0.603922, 0.603922, 0.54902 )
+motion_scale = Vector2( 0.7, 0.7 )
+motion_mirroring = Vector2( 1120, 840 )
+
+[node name="Sprite" type="Sprite" parent="ParallaxBackground/Nearby Blocks"]
+scale = Vector2( 1.75, 1.75 )
+texture = ExtResource( 10 )
+centered = false
