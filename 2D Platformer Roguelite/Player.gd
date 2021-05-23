@@ -13,6 +13,7 @@ const SPRITES = ["idle", "happy"]
 var velocity := Vector2.ZERO
 var idle_animated_sprites = SPRITES
 var rand_idle_sprites
+var coins := 0
 
 """
 Better Jump - https://www.youtube.com/watch?v=hG9SzQxaCm8
@@ -66,24 +67,25 @@ func player_movement()-> void:
 		player_sprite.play(rand_idle_sprites)
 	
 	if not is_on_floor():
-		player_sprite.play("air")  	
+		player_sprite.play("air")
 #		print(is_on_floor())
 
 	if Input.is_action_just_pressed("jump") and is_on_floor():
 		velocity.y = jump_force * 100.0
 	
 	velocity = move_and_slide(velocity, Vector2.UP)
-	
 	velocity.x = lerp(velocity.x, 0, 0.5)
 	velocity.y += gravity
-
+	
+	if coins == 3:
+#		print("GG ! - You have collected: ", coins, " coins")
+		get_tree().change_scene("res://Level1.tscn")
 
 func _gravity() -> void:
 	if is_on_floor():   
 		velocity.y = GRAVITY_ON_FLOOR
 	else:
 		velocity.y += gravity         
-
 
 func _on_FallZone_body_entered(body: Node) -> void:
 	if body == self:
@@ -95,3 +97,6 @@ func _on_FallZone_body_entered(body: Node) -> void:
 		print(body.name, " ", body.get_children().size())
 		body.queue_free()
 """
+
+func add_coin():
+	coins += 1
