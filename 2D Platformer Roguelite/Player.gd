@@ -76,10 +76,6 @@ func player_movement()-> void:
 	velocity = move_and_slide(velocity, Vector2.UP)
 	velocity.x = lerp(velocity.x, 0, 0.5)
 	velocity.y += gravity
-	
-	if coins == 3:
-#		print("GG ! - You have collected: ", coins, " coins")
-		get_tree().change_scene("res://Level1.tscn")
 
 func _gravity() -> void:
 	if is_on_floor():   
@@ -97,6 +93,3 @@ func _on_FallZone_body_entered(body: Node) -> void:
 		print(body.name, " ", body.get_children().size())
 		body.queue_free()
 """
-
-func add_coin():
-	coins += 1

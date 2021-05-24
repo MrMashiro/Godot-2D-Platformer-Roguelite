@@ -1,4 +1,4 @@
-[gd_scene load_steps=23 format=2]
+[gd_scene load_steps=28 format=2]
 
 [ext_resource path="res://ASSETS/WorldTiles/tileYellow_04.png" type="Texture" id=1]
 [ext_resource path="res://Player.tscn" type="PackedScene" id=2]
@@ -11,6 +11,9 @@
 [ext_resource path="res://ASSETS/background/set2_background.png" type="Texture" id=9]
 [ext_resource path="res://ASSETS/background/set2_tiles.png" type="Texture" id=10]
 [ext_resource path="res://Coin.tscn" type="PackedScene" id=11]
+[ext_resource path="res://ASSETS/HUD/coin_gold.png" type="Texture" id=12]
+[ext_resource path="res://ASSETS/fonts/BalsamiqSans-Bold.ttf" type="DynamicFontData" id=13]
+[ext_resource path="res://HUD.gd" type="Script" id=14]
 
 [sub_resource type="RectangleShape2D" id=1]
 extents = Vector2( 128, 32 )
@@ -170,6 +173,17 @@ points = PoolVector2Array( 0, 0, 0, 0, 56, 0, 60, 4, 64, 12, 64, 24, 52, 32, 48,
 [sub_resource type="RectangleShape2D" id=11]
 extents = Vector2( 133.68, 78.787 )
 
+[sub_resource type="StyleBoxFlat" id=12]
+bg_color = Color( 0, 0, 0, 0.219608 )
+corner_radius_top_left = 20
+corner_radius_top_right = 20
+corner_radius_bottom_right = 20
+corner_radius_bottom_left = 20
+
+[sub_resource type="DynamicFont" id=13]
+size = 30
+font_data = ExtResource( 13 )
+
 [node name="Level1" type="Node2D"]
 
 [node name="Tiles One-Way" type="TileMap" parent="."]
@@ -227,7 +241,7 @@ editor_draw_limits = true
 motion_mirroring = Vector2( 1280, 960 )
 
 [node name="Sprite" type="Sprite" parent="ParallaxBackground/Purple Sky"]
-position = Vector2( 62.7577, -185.251 )
+position = Vector2( 62.7577, -186.22 )
 scale = Vector2( 2, 2 )
 texture = ExtResource( 9 )
 centered = false
@@ -274,13 +288,66 @@ __meta__ = {
 [node name="CollisionShape2D" type="CollisionShape2D" parent="FallZone"]
 shape = SubResource( 11 )
 
-[node name="Coin" parent="." instance=ExtResource( 11 )]
+[node name="Coins" type="Node2D" parent="."]
+
+[node name="Coin" parent="Coins" instance=ExtResource( 11 )]
 position = Vector2( 254, 150 )
 
-[node name="Coin2" parent="." instance=ExtResource( 11 )]
-position = Vector2( 2362.07, 340.488 )
+[node name="Coin2" parent="Coins" instance=ExtResource( 11 )]
+position = Vector2( 2372.05, 340.663 )
 
-[node name="Coin3" parent="." instance=ExtResource( 11 )]
-position = Vector2( 3143.6, -106.908 )
+[node name="Coin3" parent="Coins" instance=ExtResource( 11 )]
+position = Vector2( 3144.14, -101.071 )
+
+[node name="HUD" type="CanvasLayer" parent="."]
+script = ExtResource( 14 )
+
+[node name="Panel" type="Panel" parent="HUD"]
+anchor_left = -1.01717
+anchor_top = 0.00884618
+anchor_right = -1.01717
+anchor_bottom = 0.00884618
+margin_left = 1047.58
+margin_top = 5.69229
+margin_right = 1161.58
+margin_bottom = 43.6923
+custom_styles/panel = SubResource( 12 )
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="TextureRect" type="TextureRect" parent="HUD"]
+anchor_left = -1.01717
+anchor_top = 0.00884618
+anchor_right = -1.01717
+anchor_bottom = 0.00884618
+margin_left = 1057.03
+margin_top = 9.91953
+margin_right = 1087.03
+margin_bottom = 39.9195
+texture = ExtResource( 12 )
+expand = true
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="x" type="Label" parent="HUD"]
+anchor_left = -1.01717
+anchor_top = 0.00884618
+anchor_right = -1.01717
+anchor_bottom = 0.00884618
+margin_left = 1092.27
+margin_top = 8.49975
+margin_right = 1133.27
+margin_bottom = 56.4997
+custom_fonts/font = SubResource( 13 )
+custom_colors/font_color = Color( 0.933333, 0.776471, 0.0705882, 1 )
+text = "x"
+__meta__ = {
+"_edit_use_anchors_": false
+}
 
 [connection signal="body_entered" from="FallZone" to="Player" method="_on_FallZone_body_entered"]
+[connection signal="coin_collected" from="Coins/Coin" to="HUD" method="_on_coin_collected"]
+[connection signal="coin_collected" from="Coins/Coin2" to="HUD" method="_on_coin_collected"]
+[connection signal="coin_collected" from="Coins/Coin3" to="HUD" method="_on_coin_collected"]
