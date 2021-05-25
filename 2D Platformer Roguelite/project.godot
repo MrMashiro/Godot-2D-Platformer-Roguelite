@@ -33,6 +33,7 @@ _global_script_class_icons={
 [application]
 
 config/name="2D Platformer Roguelite"
+run/main_scene="res://TitleMenu.tscn"
 config/icon="res://icon.png"
 
 [input]

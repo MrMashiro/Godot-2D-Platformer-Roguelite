@@ -10,7 +10,8 @@ func _ready() -> void:
 
 func _physics_process(delta: float) -> void:
 	if coins == 3:
-		get_tree().change_scene("res://Level1.tscn")	
+		print("You win !")
+		get_tree().change_scene("res://TitleMenu.tscn")
 #		print("GG ! - You have collected: ", coins, " coins")
 
 

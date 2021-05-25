@@ -117,5 +117,6 @@ func hit(var enemy_posX) -> void:
 	
 	
 func _on_Timer_timeout() -> void:
-	get_tree().change_scene("res://Level1.tscn")
+	print("You lose !")
+	get_tree().change_scene("res://TitleMenu.tscn")
 	
