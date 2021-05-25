@@ -15,12 +15,18 @@ _global_script_classes=[ {
 "path": "res://Coin.gd"
 }, {
 "base": "KinematicBody2D",
+"class": "Enemy",
+"language": "GDScript",
+"path": "res://Enemy.gd"
+}, {
+"base": "KinematicBody2D",
 "class": "Player",
 "language": "GDScript",
 "path": "res://Player.gd"
 } ]
 _global_script_class_icons={
 "Coin": "",
+"Enemy": "",
 "Player": ""
 }
 
