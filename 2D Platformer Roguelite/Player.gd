@@ -6,6 +6,7 @@ export (float, 1, 10, 0.1) var player_speed := 4.0
 export (float, -30, -1, 0.1) var jump_force := -18
 
 onready var player_sprite = $Sprite
+onready var timer = $Timer
 
 const GRAVITY_ON_FLOOR = 10
 const SPRITES = ["idle", "happy"]
@@ -42,18 +43,18 @@ G = gravity
 / = division
 ^2 = square
 """
-
-
+	
+	
 func _ready() -> void:
 	randomize()
 	rand_idle_sprites = idle_animated_sprites[randi() % idle_animated_sprites.size()]
-
-
+	
+	
 func _physics_process(_delta: float) -> void:
 	_gravity()
 	player_movement()
-
-
+	
+	
 func player_movement()-> void:
 	if Input.is_action_pressed("right"):
 		velocity.x = player_speed * 100.0
@@ -69,27 +70,52 @@ func player_movement()-> void:
 	if not is_on_floor():
 		player_sprite.play("air")
 #		print(is_on_floor())
-
+	
 	if Input.is_action_just_pressed("jump") and is_on_floor():
 		velocity.y = jump_force * 100.0
 	
 	velocity = move_and_slide(velocity, Vector2.UP)
 	velocity.x = lerp(velocity.x, 0, 0.5)
 	velocity.y += gravity
-
+	
+	
 func _gravity() -> void:
 	if is_on_floor():   
 		velocity.y = GRAVITY_ON_FLOOR
 	else:
 		velocity.y += gravity         
-
+	
+	
 func _on_FallZone_body_entered(body: Node) -> void:
 	if body == self:
-		var _err = get_tree().change_scene("res://Level1.tscn")
+		get_tree().change_scene("res://Level1.tscn")
 #		print(body.name, " ", body.get_children().size())
-
+	
 """"
 	if body == Enemy:
 		print(body.name, " ", body.get_children().size())
 		body.queue_free()
 """
+	
+	
+func bounce() -> void:
+	velocity.y = ((jump_force * 100.0) * 0.7)
+	
+	
+func hit(var enemy_posX) -> void:
+	set_modulate(Color(1,0.3,0.3,0.3))
+	velocity.y = ((jump_force * 100.0) * 0.5)
+	
+	if position.x < enemy_posX:
+		velocity.x = -1000
+	elif position.x > enemy_posX:
+		velocity.x = 1000
+		
+	Input.action_release("left")
+	Input.action_release("right")
+	timer.start()
+	
+	
+func _on_Timer_timeout() -> void:
+	get_tree().change_scene("res://Level1.tscn")
+	
